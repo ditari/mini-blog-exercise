@@ -16,6 +16,8 @@ html, body{
 
 .kiri{
     background-color: #9DDE8B;
+    color:#006769;
+    text-align: left;
 }
 
 .kanan{
@@ -37,31 +39,31 @@ html, body{
     border: 13px;
 }
 
-/*
 .kontainer-info{
     background-color: #40A578;
     color: #E6FF94;
-       
-}*/
+    /*padding: 5px;*/
+}
 
 .kontainer-tanggal{
-    background-color: #40A578;
     text-align: left;
-    color: #E6FF94;
-    padding-left: 10px;
-    padding-right: 10px;
-     
+    
+    display:inline-block;
+    
+    background-color: #40A578;
+
 
 }
 
 .kontainer-button{
     width:100%;
-    text-align: right; 
+    text-align: right;
+       
     background-color: #40A578;
-
 }
 
 .b1, .b2{
+    background-color: #40A578;
     display:inline-block;
   
 }
@@ -69,9 +71,15 @@ html, body{
 
 
 .isi-text{
+    /*margin: 10 px;*/
     background-color: #E6FF94;
     color: black;
-    padding: 10px;
    /* border-top-right-radius: 10px;
     border-top-left-radius: 10px;*/
 }
+
+.paging{
+    text-align: right;
+}
+
+.paging a{color: black}

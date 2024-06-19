@@ -1,87 +1,147 @@
 import express from "express";
 import bodyParser from "body-parser";
-//import { dirname } from "path";
-//import { fileURLToPath } from "url";
+import mysql from "mysql2/promise";
+import axios from "axios";
+
 
 const app = express();
 const port = 3000;
-const arrayBlog=[];
-const arrayDate=[];
-//const choice="view";
-//const __dirname = dirname(fileURLToPath(import.meta.url));
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const connection = await mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "root",
+  database: "Blogdatabase",
+});
+
+
 function addPostDate(t) {
-    let date = new Date();
-    let h = date.getHours();
-    let m = date.getMinutes();
-    let fulldate = t + date.toLocaleDateString() + " " + h + ":" + m; 
-    return fulldate;
+  let date = new Date();
+  let h = date.getHours();
+  let m = date.getMinutes();
+  let hh = "" + h;
+  let mm = "" + m;
+  if (h < 10) 
+      hh = "0"+ h;
+  if (m   <   10)
+      mm = "0"+ m;
+  let fulldate = t + date.toLocaleDateString() + " " + hh + ":" + mm; 
+  return fulldate;
 }
 
-app.get("/", (req, res) => {
-    //if (choice == "view" | choice == "create")
-    //else    
-    res.render("index.ejs", {arrBlog: arrayBlog, arrDate: arrayDate});
+app.get("/about", (req, res) => {
+  res.render("about.ejs");
 });
 
-app.post("/", (req, res) => {
-    let choice = req.body["choice"]
-    if (choice == "create"){
-        let texts = req.body["singlepost"];
-        if (texts.length > 0)
-        {
-            arrayBlog.push (req.body["singlepost"]);
-            arrayDate.push(addPostDate("Posted at: "));    
+
+app.get("/", async (req, res) => {
+  
+  let totalpage = 0;
+  try {
+    const [results, fields] = await connection.query("SELECT Count(*) as total FROM Blogpost");
+    let total = results[0].total;
+    if (total%10 != 0)
+      {totalpage = Math.floor(total/10) + 1;}
+    else
+      totalpage = Math.floor(total/10);
+  } catch (err) {
+    console.log(err);
+  }
+
+  let page = parseInt(req.query.page) || 1;
+  let offset = (page * 10)-10;
+  let query = `SELECT * FROM Blogpost order by ID desc limit 10 offset ${offset} ;`  
+  let output = [];
+  try {
+    const [results, fields] = await connection.query(query);
+    //console.log("res"+results[1].TextPost);
+    output = results;
+  } catch (err) {
+    console.log(err);
+  }
+
+  let randomayah = Math.floor(Math.random() * (6236)) + 1;
+  let apiurl1 = "http://api.alquran.cloud/v1/ayah/" + randomayah + "/en.asad";
+  const response1 = await axios.get(apiurl1);
+  const result1 = response1.data;
+
+  let apiurl2 = "http://ip-api.com/json/";
+  const response2 = await axios.get(apiurl2);
+  const result2 = response2.data;
+
+  const todaydate = new Date().toLocaleDateString();
+
+  res.render("index.ejs", { items: output , currentpage: page, totalpage: totalpage, rapi1 : result1, rapi2 : result2, today:todaydate});
+});
+
+
+app.post("/delete", async (req, res) => {
+  let id = req.body["del_id"];
+  let query ="Delete from Blogpost where ID ='" + id+"'" 
+
+  try {
+      await connection.query(
+        query
+      );
+    } catch (err) {
+      console.log(err);      
+    }
+  res.render("delete.ejs");
+});
+
+app.post("/", async (req, res) => {
+  let choice = req.body["choice"]
+  if (choice == "create"){
+      let texts = req.body["singlepost"];
+      if (texts.length > 0)
+      {
+          try {
+              let cdate = addPostDate("Posted at: ");
+              let query = `Insert into Blogpost (TextPost, PostDate) values ("${texts}", "${cdate}");`; 
+              await connection.query(query);
+               
+            } catch (err) {
+              console.log(err);
+            }
+      }
+  }
+
+  else if (choice == "edit"){
+      let id = req.body["id"];
+      let etext= req.body["singlepost"];
+      let edate = addPostDate("Edited at: ");
+
+      try {
+          let query = `Update Blogpost set TextPost = "${etext}", PostDate = "${edate}" where ID = ${id} ;` ;          
+          await connection.query(query);
+           
+        } catch (err) {
+          console.log(err);
         }
-    }
-    else if (choice == "delete"){
-        let id = req.body["id"];
-        arrayBlog.splice(id, 1);
-        arrayDate.splice(id, 1);
-    }
-    else if (choice == "edit"){
-        let id = req.body["id"];
-        let i = parseInt(id);
-        arrayBlog[i] = req.body["singlepost"];
+   }
 
-        arrayDate[i] = addPostDate("Edited at: ");
-    }
-    res.render("index.ejs", {arrBlog: arrayBlog, arrDate: arrayDate });
-});
+   res.redirect("/");
+  });
 
-
-
-app.post("/delete", (req, res) => {
-    let id = req.body["del"];
-    res.render("delete.ejs", {index : id });
-});
-
-app.post("/edit", (req, res) => {
+app.post("/edit", async (req, res) => {
     let id = req.body["edit_id"];
-    let i = parseInt(id);
+    let p = "";
+    try {
+        let query = "Select TextPost from Blogpost where id = '"+id+"';"            
+        
+        const [results, fields] = await connection.query(query);
+        p = results[0].TextPost;   
+        
+      } catch (err) {
+        console.log(err);
+      }
 
-    let texts = req.body["edit_post"];
-    const arr = texts.split(",");
-
-    //untuk yg pertama
-    if (i==0){
-        let t1 = arr[0];
-        arr[0] = t1.trim();            
-    }
-
-    let p = arr[i];
     res.render("edit.ejs", {edit_post: p, index : id });
 });
 
-  app.get("/about", (req, res) => {
-    res.render("about.ejs");
-  });
-
-
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-  });
-  
+  console.log(`Server running on port ${port}`);
+});

@@ -15,37 +15,40 @@
         <div class="container-fluid">
             <div class="row atas"></div>
             <div class="row">
-                <div class="col kanan"></div>
-                <div class="col-6">
+                <div class="col-lg-3 col-md-12 kanan"></div>
+                <div class="col-lg-6 col-md-12">
                     <div class="kontainer-post">
-                        <div class="kontainer-info"><h5>About</h5></div>
-
+                        
+                    <div class="kontainer-info">
+                        <h5 style="background-color: #40A578; padding: 0; margin: 0;">About</h5>
+                    </div>
                         <div class="isi-text">
                             This mini blog is a coding exercise made by using :
                             <ul>
-                                <li>HTML</li>
+                                <li>EJS</li>
                                 <li>CSS and Bootstrap framework</li>
                                 <li>Node JS and Express framework</li>
-								<li>EJS</li>
+                                <li>MySQL database</li>
+                                <li> <a href="https://alquran.cloud/api" style="color:black"> Quran API </a> 
+                                    and <a href="https://ip-api.com/" style="color:black"> IP API</a> 
+                                </li>
                             </ul>    
-                            
-                            It doesn't use a database yet, so all data will be erased in the new session! 
-                            
-                        </br>
-                            Any comments? You can contact me at <a href=mailto:“ditari_se@zohomail.com”>ditari_se@zohomail.com</a>
+                            Any feedback? You can contact me at <a style="color:black" href=mailto:“ditari_se@zohomail.com”>ditari_se@zohomail.com</a>
 
                         </div>
 
                         <div class="kontainer-info">
+                            <div class="kontainer-button">
                             <form method="post" action="/">
                                 <button type="submit">Go back</button>
                             </form>
+                            </div>
                         </div>
                     </div>
 
 
                 </div>
-                <div class="col kiri"></div>
+                <div class="col-lg-3 col-md-12 kiri"></div>
             </div>
         </div>
         <%- include("footer.ejs") %>

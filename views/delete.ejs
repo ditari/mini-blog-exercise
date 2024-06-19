@@ -15,29 +15,27 @@
         <div class="container-fluid">
             <div class="row atas"></div>
             <div class="row">
-                <div class="col kanan"></div>
-                <div class="col-6">
+                <div class="col-lg-3 col-md-12 kiri"></div>
+                <div class="col-lg-6 col-md-12 kontainer-utama">
 
                     <div class="kontainer-post">
                         <div class="isi-text">
                             This post is deleted
                         </div>
 
-                        <div class="kontainer-button">
-                            <form method="post" action="/">
+                        <div class="kontainer-info">
+                            <div class="kontainer-button">
 
-                                <input type="hidden" name="choice" value="delete">
-                                <input type="hidden" name="id" value="
-                                <%=index%>
-                                ">
+                            <form method="get" action="/">
                                 <button type="submit">Go back</button>
                             </form>
+                            </div>
                         </div>
                     </div>
 
 
                 </div>
-                <div class="col kiri"></div>
+                <div class="col-lg-3 col-md-12 kiri"></div>
             </div>
         </div>
         <%- include("footer.ejs") %>
