@@ -20,11 +20,17 @@
 
 
         <div class="col-lg-2 col-md-12 kiri">
-    <h3><%=rapi2.city%></h3> 
-    <%=rapi2.regionName%>, <%=rapi2.country%>
-    <br>
-    <%=today%> 
-  </div>
+        <h3 style="text-align: left;"><%=rapi2.city%></h3> 
+        <%=rapi2.regionName%>, <%=rapi2.country%>
+        </br>
+        <%=today%> 
+        </br>
+        <%=rapi3.temp%>&deg, <%=rapi3.description%>
+        </br>
+        
+        <img src="icons/<%=rapi3.icon%>.png" alt="weathericon" width="75" height="75">
+ 
+      </div>
 
   <div class=" col-lg-6 col-md-12 kontainer-utama">
     <div class="kontainer-post">

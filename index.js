@@ -2,10 +2,14 @@ import express from "express";
 import bodyParser from "body-parser";
 import mysql from "mysql2/promise";
 import axios from "axios";
+import env from "dotenv";
 
 
 const app = express();
 const port = 3000;
+env.config();
+
+const apikeydata = process.env.WEATHER_API_KEY;
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -74,7 +78,20 @@ app.get("/", async (req, res) => {
 
   const todaydate = new Date().toLocaleDateString();
 
-  res.render("index.ejs", { items: output , currentpage: page, totalpage: totalpage, rapi1 : result1, rapi2 : result2, today:todaydate});
+  let lat = result2.lat;
+  let lon = result2.lon;
+
+  let apiurl3 = "https://api.weatherbit.io/v2.0/current?key="+apikeydata+"&lat="+lat+"&lon="+lon;
+  const response3 = await axios.get(apiurl3);
+  const result3 = response3.data;
+
+  let rapi3 = {};
+  rapi3["temp"]= result3.data[0].temp;
+  rapi3["description"] = result3.data[0].weather.description;
+  rapi3 ["icon"] = result3.data[0].weather.icon;
+
+  res.render("index.ejs", { 
+    items: output , currentpage: page, totalpage: totalpage, rapi1 : result1, rapi2 : result2, today:todaydate, rapi3:rapi3});
 });
 
 
