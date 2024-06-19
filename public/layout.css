@@ -1,0 +1,73 @@
+html, body{
+    height: 100%;
+    margin: 0;
+}
+
+.container-fluid{
+    min-height:100%;
+    background-color: #9DDE8B
+}
+
+.atas{
+    background-color: #9DDE8B;
+    height: 20px;
+}
+
+
+.kiri{
+    background-color: #9DDE8B;
+}
+
+.kanan{
+    background-color: #9DDE8B;
+}
+
+.kontainer-utama{
+    background-color: #9DDE8B;
+    align-items: center; 
+    justify-content: center;
+}
+
+
+.kontainer-post{
+    margin-bottom: 20px;
+    background-color: #006769;
+    border-radius: 10px;
+    padding: 12px;
+    border: 13px;
+}
+
+.kontainer-info{
+    background-color: #40A578;
+    color: #E6FF94;
+}
+
+.kontainer-tanggal{
+    /*background-color: #40A578;*/
+    text-align: left;
+    
+    display:inline-block;
+    
+
+
+}
+
+.kontainer-button{
+    width:100%;
+    text-align: right;
+}
+
+.b1, .b2{
+    background-color: #40A578;
+    display:inline-block;
+  
+}
+
+
+
+.isi-text{
+    background-color: #E6FF94;
+    color: black;
+   /* border-top-right-radius: 10px;
+    border-top-left-radius: 10px;*/
+}
