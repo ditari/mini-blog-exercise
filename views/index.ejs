@@ -30,15 +30,17 @@
                         <%} else { %>
                             <% let n=locals.arrBlog.length; for (let i=0;i<n;i++) { %>
                                 <div class="kontainer-post">
+                                    <div class="kontainer-tanggal">
+                                        <%= arrDate[i]%>
+                                    </div>
+
+
                                     <div class="isi-text">
                                         <%= arrBlog[i] %>
                                     </div>
 
-                                    <div class=" kontainer-info">
+                                    
 
-                                        <div class="kontainer-tanggal">
-                                            Posted at : <%= arrDate[i]%>
-                                        </div>
 
                                         <div class="kontainer-button">
                                             <div class="b1">
@@ -62,7 +64,7 @@
                                                 </form>
                                             </div>
                                         </div>
-                                    </div>
+                                    
                                 </div>
 
 
@@ -71,14 +73,14 @@
                                     <% } %>
 
                                         <div class="kontainer-post">
-                                            <div class="kontainer-info">
+                                            <div class="kontainer-tanggal">
                                                 Post your blog here :
                                             </div>
                                             <form method="post">
                                                 <textarea name="singlepost" rows="5" class="form-control"
                                                     style="background-color: #E6FF94;"></textarea>
                                                 <input type="hidden" name="choice" value="create">
-                                                <div class="kontainer-info">
+                                                <div class="kontainer-button">
                                                     <button type="submit"> Add post </button>
                                                 </div>
                                             </form>

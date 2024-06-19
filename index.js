@@ -13,11 +13,11 @@ const arrayDate=[];
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-function addPostDate() {
+function addPostDate(t) {
     let date = new Date();
     let h = date.getHours();
     let m = date.getMinutes();
-    let fulldate = "" + date.toLocaleDateString() + " " + h + ":" + m; 
+    let fulldate = t + date.toLocaleDateString() + " " + h + ":" + m; 
     return fulldate;
 }
 
@@ -34,7 +34,7 @@ app.post("/", (req, res) => {
         if (texts.length > 0)
         {
             arrayBlog.push (req.body["singlepost"]);
-            arrayDate.push(addPostDate());    
+            arrayDate.push(addPostDate("Posted at: "));    
         }
     }
     else if (choice == "delete"){
@@ -47,7 +47,7 @@ app.post("/", (req, res) => {
         let i = parseInt(id);
         arrayBlog[i] = req.body["singlepost"];
 
-        arrayDate[i] = addPostDate();
+        arrayDate[i] = addPostDate("Edited at: ");
     }
     res.render("index.ejs", {arrBlog: arrayBlog, arrDate: arrayDate });
 });

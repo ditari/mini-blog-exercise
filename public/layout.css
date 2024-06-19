@@ -37,28 +37,31 @@ html, body{
     border: 13px;
 }
 
+/*
 .kontainer-info{
     background-color: #40A578;
     color: #E6FF94;
-}
+       
+}*/
 
 .kontainer-tanggal{
-    /*background-color: #40A578;*/
+    background-color: #40A578;
     text-align: left;
-    
-    display:inline-block;
-    
-
+    color: #E6FF94;
+    padding-left: 10px;
+    padding-right: 10px;
+     
 
 }
 
 .kontainer-button{
     width:100%;
-    text-align: right;
+    text-align: right; 
+    background-color: #40A578;
+
 }
 
 .b1, .b2{
-    background-color: #40A578;
     display:inline-block;
   
 }
@@ -68,6 +71,7 @@ html, body{
 .isi-text{
     background-color: #E6FF94;
     color: black;
+    padding: 10px;
    /* border-top-right-radius: 10px;
     border-top-left-radius: 10px;*/
 }
